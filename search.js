@@ -6,13 +6,11 @@ $(document).ready(
 		fxMap = {};
 		
 		var SEARCH = {};
-
 		SEARCH.myOptions = {
 			zoom : 4,
 			center : new google.maps.LatLng(51.25, 21.00),
 			mapTypeId : google.maps.MapTypeId.ROADMAP
 		};
-
 		SEARCH.map = new google.maps.Map(document.getElementById('map'), SEARCH.myOptions);
 		SEARCH.mcOptions = {
 			gridSize : 30,
