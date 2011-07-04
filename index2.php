@@ -27,7 +27,7 @@
       var mcOptions = {gridSize: 30, maxZoom: 15};
       var mc = new MarkerClusterer(map, [], mcOptions);
       var bounds = new google.maps.LatLngBounds();
-      google.maps.event.addListener(mc, 'loaded', function(){
+      google.maps.event.addListener(mgr, 'loaded', function(){
           alert('cos');
         $.ajax({
           url: 'alerts.php',
