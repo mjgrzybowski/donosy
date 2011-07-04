@@ -16,6 +16,7 @@ $(document).ready(
 		mapObject.mapView(SEARCH.myOptions);
 		
 		SEARCH.map = mapObject.mapView('map');
+		SEARCH.geocoder = mapObject.mapView('geocoder');
 		
 		SEARCH.mcOptions = {
 			gridSize : 30,
@@ -24,27 +25,28 @@ $(document).ready(
 		SEARCH.mc = new MarkerClusterer(SEARCH.map, [], SEARCH.mcOptions);
 		SEARCH.bounds = new google.maps.LatLngBounds();
 
-		$.ajax({
-			url : 'alertSearch.php',
-			success : function(data) {
-				var batch = [];
-				$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
-				$.map(data.alerts, function(value) {
-					batch.push(new google.maps.Marker({
-						position : new google.maps.LatLng(value[1],
-								value[2]),
-						title : value[6],
-						flat : true
-					}));
-					SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
-					
-					SEARCH.createListElement(value);
-				});
-
-				SEARCH.mc.addMarkers(batch, 3);
-				SEARCH.map.fitBounds(SEARCH.bounds);
-			}
-		});
+		SEARCH.getAlerts = function(){
+			$.ajax({
+				url : 'alertSearch.php',
+				success : function(data) {
+					var batch = [];
+					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
+					$.map(data.alerts, function(value) {
+						batch.push(new google.maps.Marker({
+							position : new google.maps.LatLng(value[1],
+									value[2]),
+							title : value[6],
+							flat : true
+						}));
+						SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
+						SEARCH.createListElement(value);
+					});
+	
+					SEARCH.mc.addMarkers(batch, 3);
+					SEARCH.map.fitBounds(SEARCH.bounds);
+				}
+			});
+		};	
 
 		SEARCH.markers = {};
 		google.maps.event.addListener(SEARCH.map, 'idle', function() {
