@@ -31,11 +31,11 @@ $(document).ready(
 						position : new google.maps.LatLng(value[1],
 								value[2]),
 						title : value[6],
-
 						flat : true
 					}));
 					SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
-					$('#list').append('<div><img width="80px" height="80px" src="zalezne od '+value[0]+' param" alt="'+value[7]+'" /><b>'+value[6]+'</b><br>'+value[8]+'<br>'+value[9]+'</div>');					
+					
+					SEARCH.createListElement(value);
 				});
 
 				SEARCH.mc.addMarkers(batch, 3);
@@ -68,5 +68,26 @@ $(document).ready(
 			return batch;
 		};
 		
+		
+		SEARCH.createListElement = function(value){
+			$('<div/>', {
+				class: 'listElement_'+value[0],
+				id: value[0], 
+				lat: value[1],
+				lng: value[2],
+				status: value[3],
+				support: value[4],
+				category: value[5],
+				name: value[6],
+				summary: value[7],
+				location: value[8],
+				user: value[9]
+			}).appendTo('#list');
+			$('#list .listElement_'+value[0]+'').append(
+				'<div class="image"><img width="80px" height="80px" src="zalezne od '+value[0]+' param" alt="'+value[7]+'" /></div>'
+				+'<div class="discription"><b>'+value[6]+'</b><br>'+value[8]+'<br>'+value[9]+'</div>'					
+			);
+			
+		};
 		
 });

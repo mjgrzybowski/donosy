@@ -48,7 +48,6 @@ $output = array(ALERTS => array());
 if ($input['ne'] != null && $input['sw'] != null) {
     $results = mt_rand(RESULTS_SEARCH_MIN, RESULTS_SEARCH_MAX);
     
-    
     $lat_min_scaled = $input['sw']['lat'] * SCALE;
     $lat_max_scaled = $input['ne']['lat'] * SCALE;
     $lng_min_scaled = $input['sw']['lng'] * SCALE;
@@ -69,7 +68,6 @@ if ($input['ne'] != null && $input['sw'] != null) {
         );
     }
 } else {
-    
     for ($i = 0; $i < RESULTS; $i++) {
         $output[ALERTS][($i) * 10] = array(
         	$i,
