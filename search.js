@@ -97,8 +97,9 @@ $(document).ready(
 			);
 		};
 		
-		SEARCH.codeAddress = function () {
-		    var address = document.getElementById("address").value;
+		SEARCH.codeAddress = function (address) {
+			if(!address)
+				var address = document.getElementById("address").value;
 		    SEARCH.geocoder.geocode( {'address' : address}, function(results, status) {
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
@@ -112,7 +113,7 @@ $(document).ready(
 		$("#address").autocomplete({
 		      //This bit uses the geocoder to fetch address values
 		      source: function(request, response) {
-		        geocoder.geocode( {'address': request.term }, function(results, status) {
+		    	  SEARCH.geocoder.geocode( {'address': request.term, 'region' : 'pl'}, function(results, status) {
 		          response($.map(results, function(item) {
 		            return {
 		              label:  item.formatted_address,
@@ -125,10 +126,13 @@ $(document).ready(
 		      },
 		      //This bit is executed upon selection of an address
 		      select: function(event, ui) {
-		        SEARCH.map.setCenter(ui.item.location);
-		        SEARCH.map.fitBounds(ui.item.bounds);
+		    	  SEARCH.codeAddress(ui.item.value);
 		      }
-		 });
+		 },
+	      {
+	    	  'scrollHeight' : '150px'
+	      }
+	     );
 		
 		
 		
