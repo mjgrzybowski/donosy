@@ -9,7 +9,7 @@
         var _dom = $(this).get(0);
         var _settings = {
             "config": {
-                "latlng" : null,
+                "latlng" : new google.maps.LatLng(52,21),
                 "address" : null,
                 "categories" : {
                     "icons" : null,
@@ -47,18 +47,23 @@
                     if ( options )  
                         $.extend( _settings, options );
                     
+                    var latlng = new google.maps.LatLng(-34.397, 150.644);
                     var mapOptions = {
-                        
+                        zoom: 6,
+                        center: _settings.config.latlng,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
+
                     $(this).data('_map', new google.maps.Map(_dom, mapOptions));
                     
                     
 		
                     
-                    $(this).data('markerClusterer', new MarkerClusterer(SEARCH.map, [], {
-			gridSize : 30,
-			maxZoom : 15
-                    }));
+                    $(this).data('markerClusterer',
+                        new MarkerClusterer($(this).data('_map'), [], {
+                            gridSize : 30,
+                            maxZoom : 15
+                        }));
                 });
             },
             map : function ( options ){
@@ -77,15 +82,15 @@
                    
                 });
 	
-               $(this).data('markerClusterer').addMarkers(batch, 3);
+                $(this).data('markerClusterer').addMarkers(batch, 3);
             },
             addAlert : function ( singleAlert ) {
                 // TODO sprawdzanie czy Alert
                 $(this).data('markerClusterer', new google.maps.Marker({
-                        position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
-                        title : singleAlert['name']
+                    position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
+                    title : singleAlert['name']
                         
-                    }));
+                }));
             },
             clearAlerts : function (){
                 $(this).data('markerClusterer').clearAlerts();
