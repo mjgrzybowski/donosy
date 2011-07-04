@@ -1,0 +1,14 @@
+/* 
+ * Przykładowe zapytanie GET['json'] do pliku alerts.php zwracające plik json z losowymi wynikami dla podanego zakresu
+ */
+
+{
+    "ne": {
+        "lat" : 52.50,
+        "lng" : 21.50
+    },
+    "sw": {
+        "lat" : 51.50,
+        "lng" : 20.50
+    }    
+}
