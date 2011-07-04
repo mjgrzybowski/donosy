@@ -9,6 +9,8 @@
 	    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js" type="text/javascript"></script>
 	    <script src="mapView.js" type="text/javascript"></script> 
 		<script src="search.js"></script>
+		<script src="php.default.min.js"></script>
+		
   	</head>
 	<body style="width: 100%; height: 100%; margin: 0;">
 		<div id="navigationForm">

@@ -25,13 +25,14 @@ $(document).ready(
 		};
 		SEARCH.mc = new MarkerClusterer(SEARCH.map, [], SEARCH.mcOptions);
 		SEARCH.bounds = new google.maps.LatLngBounds();
-		SEARCH.addAlerts = mapObject.mapView('addAlerts');
 		
 		SEARCH.getAlerts = function(ne, sw){
+			data = { 'ne': ne, 'sw': sw };
+			data2 = json_encode(data);
 			$.ajax({
 				url : 'alertSearch.php',
 				dataType: 'json',
-				data: { 'ne': ne, 'sw': sw },
+				data: data2,
 				success : function(data) {
 					var batch = [];
 					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
@@ -43,9 +44,9 @@ $(document).ready(
 							flat : true
 						}));
 						
-						singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
-						SEARCH.addAlerts(singleAlert);
-						
+					//	singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
+					//	mapObject.mapView('addAlert',singleAlert);
+		
 						SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
 						SEARCH.createListElement(value);
 					});
@@ -113,14 +114,15 @@ $(document).ready(
 		    SEARCH.geocoder.geocode( { 'address': address}, function(results, status) {
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
+		    	latlng = results[0].geometry.viewport;
 		    	SEARCH.map.fitBounds(results[0].geometry.viewport);
 		    	ne = {
-		    			'lat': results[0].geometry.viewport.getNortEast().lat(), 
-		    			'lng': results[0].geometry.viewport.getNortEast().lng(),
+		    			'lat': latlng.getNorthEast().lat(), 
+		    			'lng': latlng.getNorthEast().lng(),
 		    		};
 		    	sw = {
-		    			'lat': results[0].geometry.viewport.getSouthEast().lat(), 
-		    			'lng': results[0].geometry.viewport.getSouthEast().lng(),
+		    			'lat': latlng.getSouthWest().lat(), 
+		    			'lng': latlng.getSouthWest().lng(),
 		    		};
 		    	
 		    	SEARCH.getAlerts(ne, sw);
