@@ -38,12 +38,10 @@
                 flat: true
               }));
               bounds.extend(new google.maps.LatLng(value[0], value[1]));
-              
             });
           
            
-            mc      
-            .addMarkers(batch, 3);  
+            mc.addMarkers(batch, 3);  
             map.fitBounds(bounds);
             
           }
