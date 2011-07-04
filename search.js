@@ -2,6 +2,8 @@
  * 
  */
 $(document).ready(
+	
+		
 	function() {
 		fxMap = {};
 		
