@@ -28,8 +28,7 @@ $(document).ready(
 
 				$.map(data.alerts, function(value) {
 					batch.push(new google.maps.Marker({
-						position : new google.maps.LatLng(value[0],
-								value[1]),
+						position : new google.maps.LatLng(value[0],	value[1]),
 						title : 'Weather marker',
 						flat : true
 					}));
