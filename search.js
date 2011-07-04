@@ -30,7 +30,7 @@ $(document).ready(
 			$.ajax({
 				url : 'alertSearch.php',
 				dataType: 'json',
-				data: { 'ne': ne, 'sw': sw }
+				data: { 'ne': ne, 'sw': sw },
 				success : function(data) {
 					var batch = [];
 					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
