@@ -78,6 +78,17 @@
                 });
 	
                $(this).data('markerClusterer').addMarkers(batch, 3);
+            },
+            addAlert : function ( singleAlert ) {
+                // TODO sprawdzanie czy Alert
+                $(this).data('markerClusterer', new google.maps.Marker({
+                        position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
+                        title : singleAlert['name']
+                        
+                    }));
+            },
+            clearAlerts : function (){
+                $(this).data('markerClusterer').clearAlerts();
             }
              
         };
