@@ -39,7 +39,11 @@ define('LNG_MAX_SCALED', LNG_MAX * SCALE);
 
 if(isset($_GET['json'])){
     
-    $input = $_GET['json'];
+    if (!isset($_GET['b64'])) {
+      $input = $_GET['json'];  
+    } else {
+      $input = base64_decode($_GET['json']);  
+    }
     
     
     
