@@ -3,17 +3,15 @@
  */
 $(document).ready(function(){
 	
-	SEARCH = {};
+	var SEARCH = {};
     
     SEARCH.myOptions = {
         zoom: 4,
         center: new google.maps.LatLng(51.25, 21.00),
         mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
+    };
+    
     SEARCH.map = new google.maps.Map(document.getElementById('map'), SEARCH.myOptions);
-
-      
-      
     SEARCH.mcOptions = {gridSize: 30, maxZoom: 15};
     SEARCH.mc = new MarkerClusterer(SEARCH.map, [], SEARCH.mcOptions);
     SEARCH.bounds = new google.maps.LatLngBounds();
@@ -34,7 +32,6 @@ $(document).ready(function(){
               
             });
           
-           
             SEARCH.mc.addMarkers(batch, 3);  
             SEARCH.map.fitBounds(SEARCH.bounds);
             
@@ -43,19 +40,16 @@ $(document).ready(function(){
                   
 
       SEARCH.markers = {};
-      
       google.maps.event.addListener(SEARCH.map, 'idle', function(){
-        
         
       });
 
-      
       SEARCH.getRandomPoint = function() {
         var lat = 48.25 + (Math.random() - 0.5) * 14.5;
         var lng = 11.00 + (Math.random() - 0.5) * 36.0;
         return new google.maps.LatLng(Math.round(lat * 10) / 10, Math.round(lng * 10) / 10);
-      }
-
+      };
+      
       SEARCH.getWeatherMarkers = function(n) {
         var batch = [];
         for (var i = 0; i < n; ++i) {
@@ -68,6 +62,5 @@ $(document).ready(function(){
         );        
         }
         return batch;
-      };   
-      
+      };
 });

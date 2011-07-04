@@ -12,6 +12,5 @@
   </head>
   <body  style="width: 100%; height: 100%; margin: 0;">
     <div id="map" style="width: 100%; height: 100%;"></div> 
-
   </body>
 </html>

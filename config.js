@@ -21,7 +21,18 @@ var options = {
     
   },
   
-  "alerts" : {},
+  "alerts" : {
+	  'id' : 123, //int
+	  'lat' : 52.234567, //float
+	  'lng' : 21.234567, //float
+	  'status' : 1, // int
+	  'support' : 22, //int
+	  'category' : 16, //int
+	  'name' : 'Przykładowa nazwa',  //string
+	  'summary' : 'Lorem ipsum dolor sit amet...', // string (140)
+	  'location' : 'Warszawa, Wojciecha Górskiego 42a', //string
+	  'user' : 'Paweł Mikołajczuk'  //string
+  },
   "polygons" : [
     {
       "paths" : [
