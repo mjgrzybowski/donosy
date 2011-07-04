@@ -4,19 +4,35 @@
 
 (function( $ ){
 
-  $.mapView = function( options ) {  
+    $.mapView = function( options ) {  
 
-    var settings = {
-    		
+        var _settings = {
+            "config": {
+                "latlng" : null,
+                "address" : null,
+                "categories" : {
+                    "icons" : null,
+                    "show" : null,
+                    "showAll" : false
+                },
+                "markerClusterer" : 
+                {
+                    "gridSize": 50,
+                    "maxZoom": 15
+                }
+
+            }
+    
+        };
     };
 
     return this.each(function() {        
-      if ( options ) { 
-        $.extend( settings, options );
-      }
+        if ( options ) { 
+            $.extend( _settings, options );
+        }
 
 
     });
 
-  };
+
 })( jQuery );

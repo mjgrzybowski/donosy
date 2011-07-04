@@ -16,7 +16,8 @@
 			<input type="text" name="location" />
 		</form>
 		</div>
-		<div id="map" style="width: 100%; height: 100%;"></div>
+		<div id="map" style="width: 60%; height: 100%; float:left;"></div>
+		<div id="list" style="width: 40%; height: 200px; float:left;"></div>	
 	</body>
 
 </html>
