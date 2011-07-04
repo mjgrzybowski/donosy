@@ -9,6 +9,15 @@
 	    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js" type="text/javascript"></script>
 	    <script src="mapView.js" type="text/javascript"></script> 
 		<script src="search.js"></script>
+		<style>
+			.ui-autocomplete {
+			    background-color: white;
+			    width: 300px;
+			    border: 1px solid #cfcfcf;
+			    list-style-type: none;
+			    padding-left: 0px;
+			}
+		</style>
   	</head>
 	<body style="width: 100%; height: 100%; margin: 0;">
 		<div id="navigationForm">
