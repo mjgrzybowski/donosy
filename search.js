@@ -26,9 +26,11 @@ $(document).ready(
 		SEARCH.mc = new MarkerClusterer(SEARCH.map, [], SEARCH.mcOptions);
 		SEARCH.bounds = new google.maps.LatLngBounds();
 
-		SEARCH.getAlerts = function(){
+		SEARCH.getAlerts = function(ne, sw){
 			$.ajax({
 				url : 'alertSearch.php',
+				dataType: 'json',
+				data: { 'ne': ne, 'sw': sw }
 				success : function(data) {
 					var batch = [];
 					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
@@ -101,6 +103,8 @@ $(document).ready(
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
 		    	SEARCH.map.fitBounds(results[0].geometry.viewport);
+//		    	ne = {'lat': results[0].geometry.viewport.getNort}
+		    	SEARCH.getAlerts()
 		      }
 		    });
 		};
