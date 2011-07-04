@@ -30,7 +30,7 @@ $(document).ready(
 			$.ajax({
 				url : 'alertSearch.php',
 				dataType: 'json',
-				data: { 'ne': ne, 'sw': sw }
+				data: { 'ne': ne, 'sw': sw },
 				success : function(data) {
 					var batch = [];
 					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
@@ -103,11 +103,33 @@ $(document).ready(
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
 		    	SEARCH.map.fitBounds(results[0].geometry.viewport);
-//		    	ne = {'lat': results[0].geometry.viewport.getNort}
 		    	SEARCH.getAlerts()
 		      }
 		    });
 		};
+		
+		
+		$("#address").autocomplete({
+		      //This bit uses the geocoder to fetch address values
+		      source: function(request, response) {
+		        geocoder.geocode( {'address': request.term }, function(results, status) {
+		          response($.map(results, function(item) {
+		            return {
+		              label:  item.formatted_address,
+		              value: item.formatted_address,
+		              latitude: item.geometry.location.lat(),
+		              longitude: item.geometry.location.lng()
+		            }
+		          }));
+		        })
+		      },
+		      //This bit is executed upon selection of an address
+		      select: function(event, ui) {
+		        SEARCH.map.setCenter(ui.item.location);
+		        SEARCH.map.fitBounds(ui.item.bounds);
+		      }
+		 });
+		
 		
 		
 		
