@@ -14,6 +14,7 @@
 		<div id="navigationForm">
 		<form action="#" method="POST">
 			<input type="text" name="location" />
+			
 		</form>
 		</div>
 		<div id="map" style="width: 60%; height: 100%; float:left;"></div>

@@ -48,7 +48,6 @@ $output = array(ALERTS => array());
 if ($input['ne'] != null && $input['sw'] != null) {
     $results = mt_rand(RESULTS_SEARCH_MIN, RESULTS_SEARCH_MAX);
     
-    
     $lat_min_scaled = $input['sw']['lat'] * SCALE;
     $lat_max_scaled = $input['ne']['lat'] * SCALE;
     $lng_min_scaled = $input['sw']['lng'] * SCALE;
@@ -62,26 +61,25 @@ if ($input['ne'] != null && $input['sw'] != null) {
         	mt_rand(1, 3), 
         	mt_rand(1, 30), 
         	mt_rand(1, 20), 
-        	$i.'-ta Przykładowa nazwa',
-        	$i.'-te Lorem ipsum dolor sit amet...',
-        	$i.'-ta lokacja',
-        	$i.'-ty użykownik'
+        	$i.' Przykładowa nazwa',
+        	$i.' Lorem ipsum dolor sit amet...',
+        	$i.' lokacja',
+        	$i.' użykownik'
         );
     }
 } else {
-    
     for ($i = 0; $i < RESULTS; $i++) {
-        $output[ALERTS][($i) * 10] = array(
+        $output[ALERTS][] = array(
         	$i,
         	mt_rand(LAT_MIN_SCALED, LAT_MAX_SCALED) / SCALE, 
         	mt_rand(LNG_MIN_SCALED, LNG_MAX_SCALED) / SCALE, 
         	mt_rand(1, 3), 
         	mt_rand(1, 30), 
         	mt_rand(1, 20), 
-        	$i.'-ta Przykładowa nazwa',
-        	$i.'-te Lorem ipsum dolor sit amet...',
-        	$i.'-ta lokacja',
-        	$i.'-ty użykownik'
+        	$i.' Przykładowa nazwa',
+        	$i.' Lorem ipsum dolor sit amet...',
+        	$i.' lokacja',
+        	$i.' użykownik'
         );
     }
 }
