@@ -33,14 +33,14 @@
 	    	   else
 	    		   options = _settings;
 	    	   
-	    	   _map = new google.maps.Map(_dom, options);
+	    	   $(this).data('map', _map = new google.maps.Map(_dom[0], options));
 	    	   console.log(_map);
 	       });
 	     },
 	     map : function ( options )
 	     {
-	    	 console.log(_map);
-	    	 return  _map;
+	    	 console.log($(this).data('map'));
+	    	 return  $(this).data('map');
 	     }
 	};
 	
