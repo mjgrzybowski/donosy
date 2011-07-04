@@ -11,7 +11,12 @@ $(document).ready(
 			center : new google.maps.LatLng(51.25, 21.00),
 			mapTypeId : google.maps.MapTypeId.ROADMAP
 		};
-		SEARCH.map = new google.maps.Map(document.getElementById('map'), SEARCH.myOptions);
+		//SEARCH.map = new google.maps.Map(document.getElementById('map'), SEARCH.myOptions);
+		var mapObject = $('#map');
+		mapObject.mapView(SEARCH.myOptions);
+		
+		SEARCH.map = mapObject.mapView('map');
+		
 		SEARCH.mcOptions = {
 			gridSize : 30,
 			maxZoom : 15
@@ -46,7 +51,7 @@ $(document).ready(
 
 		});
 
-		SEARCH.getRandomPoint = function() {
+		this.getRandomPoint = function() {
 			var lat = 48.25 + (Math.random() - 0.5) * 14.5;
 			var lng = 11.00 + (Math.random() - 0.5) * 36.0;
 			return new google.maps.LatLng(Math.round(lat * 10) / 10, Math
@@ -65,6 +70,11 @@ $(document).ready(
 			}
 			return batch;
 		};
+		
+		SEARCH.addAlert = function(options)
+		{
+			
+		}
 		
 		
 		SEARCH.createListElement = function(value){
