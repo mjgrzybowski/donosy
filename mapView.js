@@ -52,6 +52,13 @@
                     });
                     $(this).data('_map', new google.maps.Map(_dom, mapOptions));
                     
+                    
+		
+                    
+                    $(this).data('markerClusterer', new MarkerClusterer(SEARCH.map, [], {
+			gridSize : 30,
+			maxZoom : 15
+                    }));
                 });
             },
             map : function ( options ){
@@ -61,17 +68,16 @@
                 // TODO sprawdzanie czy Alert
                 var batch = [];
 					
-                $.map(alerts, function(alert) {
+                $.map(alerts, function(singleAlert) {
                     batch.push(new google.maps.Marker({
-                        position : new google.maps.LatLng(alert[1],
-                            alert[2]),
-                        title : alert[7],
-                        flat : true
+                        position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
+                        title : singleAlert['name']
+                        
                     }));
                    
                 });
 	
-                SEARCH.mc.addMarkers(batch, 3);
+               $(this).data('markerClusterer').addMarkers(batch, 3);
             }
              
         };
