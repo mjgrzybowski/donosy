@@ -38,11 +38,12 @@ define('LNG_MIN_SCALED', LNG_MIN * SCALE);
 define('LNG_MAX_SCALED', LNG_MAX * SCALE);
 
 if(isset($_GET['json'])){
-    
+    //echo "aaa";
     $input = $_GET['json'];
+    //var_dump($input);
     
     $input = json_decode($input, true);
-    
+    //var_dump($input);
 }
 $output = array(ALERTS => array());
 if ($input['ne'] != null && $input['sw'] != null) {
