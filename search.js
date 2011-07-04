@@ -25,7 +25,8 @@ $(document).ready(
 		};
 		SEARCH.mc = new MarkerClusterer(SEARCH.map, [], SEARCH.mcOptions);
 		SEARCH.bounds = new google.maps.LatLngBounds();
-
+		SEARCH.addAlerts = mapObject.mapView('addAlerts');
+		
 		SEARCH.getAlerts = function(ne, sw){
 			$.ajax({
 				url : 'alertSearch.php',
@@ -41,6 +42,10 @@ $(document).ready(
 							title : value[6],
 							flat : true
 						}));
+						
+						singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
+						SEARCH.addAlerts(singleAlert);
+						
 						SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
 						SEARCH.createListElement(value);
 					});
@@ -104,7 +109,16 @@ $(document).ready(
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
 		    	SEARCH.map.fitBounds(results[0].geometry.viewport);
-		    	SEARCH.getAlerts()
+		    	ne = {
+		    			'lat': results[0].geometry.viewport.getNortEast().lat(), 
+		    			'lng': results[0].geometry.viewport.getNortEast().lng()
+		    		};
+		    	sw = {
+		    			'lat': results[0].geometry.viewport.getSouthEast().lat(), 
+		    			'lng': results[0].geometry.viewport.getSouthEast().lng()
+		    		};
+		    	
+		    	SEARCH.getAlerts(ne, sw);
 		      }
 		    });
 		};

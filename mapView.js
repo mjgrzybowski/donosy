@@ -7,6 +7,7 @@
     $.fn.mapView = function( options ) { 
     	
         var _dom = $(this).get(0);
+        
         var _settings = {
             "config": {
                 "latlng" : new google.maps.LatLng(52,21),
@@ -38,7 +39,20 @@
                 "polygon_mouseover" :  null,
                 "polygon_mouseup" :  null,
                 "polygon_rightclick" : null
-            }
+            },
+            "buttons" : [
+            {
+                "label" : "Nazwa przycisku",
+                "controlPosition" : google.maps.ControlPosition.BOTTOM_CENTER,
+                "click" : null
+            },
+            {
+                "label" : "Nazwa przycisku",
+                "controlPosition" : google.maps.ControlPosition.BOTTOM_CENTER,
+                "click" : null
+            },
+    
+            ]
         };
         
         var methods = {
@@ -55,15 +69,37 @@
                     };
 
                     $(this).data('_map', new google.maps.Map(_dom, mapOptions));
-                    
-                    
-		
-                    
+        
                     $(this).data('markerClusterer',
                         new MarkerClusterer($(this).data('_map'), [], {
                             gridSize : 30,
                             maxZoom : 15
                         }));
+                        
+                    var controlUI = document.createElement('DIV');
+                        
+                         controlUI.style.backgroundColor = 'white';
+                          controlUI.style.borderStyle = 'solid';
+                          controlUI.style.borderWidth = '2px';
+                          controlUI.style.cursor = 'pointer';
+                          controlUI.style.textAlign = 'center';
+                          controlUI.innerHTML = 'Home';
+
+
+                        //_map.controls[google.maps.ControlPosition.RIGHT_TOP].push(controlUI);
+    
+                    var _map = $(this).data('_map');    
+                    $.each(_settings.buttons, function(key, button){
+                        var controlUI = document.createElement('DIV');
+                        
+                         
+                          controlUI.className = 'map-control';
+                          controlUI.innerHTML = button.label;
+
+
+                        _map.controls[button.controlPosition].push(controlUI);
+
+                    }); 
                 });
             },
             map : function ( options ){
