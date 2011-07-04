@@ -23,7 +23,7 @@ $(document).ready(
 			url : 'alertSearch.php',
 			success : function(data) {
 				var batch = [];
-
+				$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
 				$.map(data.alerts, function(value) {
 					batch.push(new google.maps.Marker({
 						position : new google.maps.LatLng(value[1],
@@ -83,7 +83,8 @@ $(document).ready(
 			}).appendTo('#list');
 			$('#list .listElement_'+value[0]+'').append(
 				'<div class="image"><img width="80px" height="80px" src="zalezne od '+value[0]+' param" alt="'+value[7]+'" /></div>'
-				+'<div class="discription"><b>'+value[6]+'</b><br>'+value[8]+'<br>'+value[9]+'</div>'					
+				+'<div class="discription"><b>'+value[6]+'</b><br>'+value[8]+'<br>'+value[9]+'</div>'
+				+'<div class=""></div>'
 			);
 			
 		};
