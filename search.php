@@ -8,6 +8,7 @@
 	    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markermanager/1.0/src/markermanager.js" type="text/javascript"></script> 
 	    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js" type="text/javascript"></script>
 	    <script src="mapView.js" type="text/javascript"></script> 
+            <link href="css/main.css" media="screen" rel="stylesheet" type="text/css" />
 		<script src="search.js"></script>
   	</head>
 	<body style="width: 100%; height: 100%; margin: 0;">

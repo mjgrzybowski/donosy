@@ -1,0 +1,15 @@
+/* 
+    Document   : main.css
+    Created on : 2011-07-04, 20:49:54
+    Author     : Konrad Podgórski
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.map-control {  display: inline-block;  background: url('../images/button-bg-grey.png') 50% 50% no-repeat; line-height: 16px; color: #000000 !important;  text-decoration: none;  padding: 1px 5px;  border: solid 1px #707070;  border-radius: 3px;  font-size: 12px;  position: relative; margin: 0 1px;}
+.map-control:hover {  text-decoration: none !important;}
