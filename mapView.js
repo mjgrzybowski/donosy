@@ -5,8 +5,8 @@
 (function( $ ){
 
     $.fn.mapView = function( options ) { 
-    	var _map;
-    	var _dom = $(this).get(0);
+    	
+        var _dom = $(this).get(0);
         var _settings = {
             "config": {
                 "latlng" : null,
@@ -41,30 +41,68 @@
             }
         };
         
- 	var methods = {
-	     init : function( options ) {
-	       return this.each(function(){
-	    	   if (options )
-	    		   $.extend( _settings, options );
-	    	   else
-	    		   options = _settings;
-	    	   
-	    	   $(this).data('map', _map = new google.maps.Map(_dom, options));
-	       });
-	     },
-	     map : function ( options ){return  $(this).data('map');}
-	};
+        var methods = {
+            init : function( options ) {
+                return this.each(function(){
+                    if ( options )  
+                        $.extend( _settings, options );
+                    
+                    var mapOptions = new google.maps.MapOptions({
+                        
+                    });
+                    $(this).data('_map', new google.maps.Map(_dom, mapOptions));
+                    
+                    
+		
+                    
+                    $(this).data('markerClusterer', new MarkerClusterer(SEARCH.map, [], {
+			gridSize : 30,
+			maxZoom : 15
+                    }));
+                });
+            },
+            map : function ( options ){
+                return  $(this).data('_map');
+            },
+            addAlerts : function ( alerts) { 
+                // TODO sprawdzanie czy Alert
+                var batch = [];
+					
+                $.map(alerts, function(singleAlert) {
+                    batch.push(new google.maps.Marker({
+                        position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
+                        title : singleAlert['name']
+                        
+                    }));
+                   
+                });
 	
-	// Method calling logic
-	if ( methods[options] ) {
-	  return methods[ options ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-	} else if ( typeof options === 'object' || ! options ) {
-	  return methods.init.apply( this, arguments );
-	} else {
-	  $.error( 'Method ' +  options + ' does not exist on jQuery.tooltip' );
-	}  
+               $(this).data('markerClusterer').addMarkers(batch, 3);
+            },
+            addAlert : function ( singleAlert ) {
+                // TODO sprawdzanie czy Alert
+                $(this).data('markerClusterer', new google.maps.Marker({
+                        position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
+                        title : singleAlert['name']
+                        
+                    }));
+            },
+            clearAlerts : function (){
+                $(this).data('markerClusterer').clearAlerts();
+            }
+             
+        };
 	
- };
+        // Method calling logic
+        if ( methods[options] ) {
+            return methods[ options ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+        } else if ( typeof options === 'object' || ! options ) {
+            return methods.init.apply( this, arguments );
+        } else {
+            $.error( 'Method ' +  options + ' does not exist on jQuery.tooltip' );
+        }  
+	
+    };
 
 
 })( jQuery );

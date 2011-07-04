@@ -100,13 +100,7 @@ $(document).ready(
 		    SEARCH.geocoder.geocode( {'address' : address}, function(results, status) {
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
-		        var marker = new google.maps.Marker({
-		            map: SEARCH.map,
-		            position: results[0].geometry.location
-		        });
-		        SEARCH.map.setZoom(11);
-		      } else {
-		        alert("Geocode was not successful for the following reason: " + status);
+		    	SEARCH.map.fitBounds(results[0].geometry.viewport);
 		      }
 		    });
 		};
