@@ -22,18 +22,19 @@ $(document).ready(
 		SEARCH.bounds = new google.maps.LatLngBounds();
 
 		$.ajax({
-			url : 'alerts.php',
+			url : 'alertSearch.php',
 			success : function(data) {
 				var batch = [];
 
 				$.map(data.alerts, function(value) {
 					batch.push(new google.maps.Marker({
-						position : new google.maps.LatLng(value[0],
-								value[1]),
-						title : 'Weather marker',
+						position : new google.maps.LatLng(value[1],
+								value[2]),
+						title : value[6],
 						flat : true
 					}));
-					SEARCH.bounds.extend(new google.maps.LatLng(value[0], value[1]));
+					SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
+					$('#list').append('<div><img width="80px" height="80px" src="zalezne od '+value[0]+' param" alt="'+value[7]+'" /><b>'+value[6]+'</b><br>'+value[8]+'<br>'+value[9]+'</div>');					
 				});
 
 				SEARCH.mc.addMarkers(batch, 3);
