@@ -2,10 +2,11 @@
  * 
  */
 $(document).ready(
+		
 	function() {
 		fxMap = {};
 		
-		var SEARCH = {};
+		SEARCH = {};
 		SEARCH.myOptions = {
 			zoom : 4,
 			center : new google.maps.LatLng(51.25, 21.00),
@@ -16,7 +17,7 @@ $(document).ready(
 		mapObject.mapView(SEARCH.myOptions);
 		
 		SEARCH.map = mapObject.mapView('map');
-		SEARCH.geocoder = mapObject.mapView('geocoder');
+		SEARCH.geocoder = new google.maps.Geocoder();
 		
 		SEARCH.mcOptions = {
 			gridSize : 30,
@@ -92,7 +93,21 @@ $(document).ready(
 				+'<div class="discription"><b>'+value[6]+'</b><br>'+value[8]+'<br>'+value[9]+'</div>'
 				+'<div class=""></div>'
 			);
-			
 		};
+		
+		SEARCH.codeAddress = function () {
+		    var address = document.getElementById("address").value;
+		    SEARCH.geocoder.geocode( { 'address': address}, function(results, status) {
+		      if (status == google.maps.GeocoderStatus.OK) {
+		    	SEARCH.map.setCenter(results[0].geometry.location);
+		        var marker = new google.maps.Marker({
+		            map: map,
+		            position: results[0].geometry.location
+		        });
+		      } else {
+		        alert("Geocode was not successful for the following reason: " + status);
+		      }
+		    });
+		}
 		
 });
