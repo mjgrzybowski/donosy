@@ -47,9 +47,9 @@
                     if ( options )  
                         $.extend( _settings, options );
                     
-                    var mapOptions = new google.maps.MapOptions({
+                    var mapOptions = {
                         
-                    });
+                    };
                     $(this).data('_map', new google.maps.Map(_dom, mapOptions));
                     
                     
