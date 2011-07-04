@@ -8,8 +8,7 @@
     <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script> 
     <script src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markermanager/1.0/src/markermanager.js" type="text/javascript"></script> 
     <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js" type="text/javascript"></script> 
-
-
+	<script src="mapView.js" type="text/javascript"></script>
   </head>
   <body  style="width: 100%; height: 100%; margin: 0;">
     <div id="map" style="width: 100%; height: 100%;"></div> 
@@ -22,8 +21,6 @@
       };
       var map = new google.maps.Map(document.getElementById('map'), myOptions);
 
-      
-      
       var mcOptions = {gridSize: 30, maxZoom: 15};
       var mc = new MarkerClusterer(map, [], mcOptions);
       var bounds = new google.maps.LatLngBounds();
@@ -45,26 +42,18 @@
             });
           
            
-            mc.addMarkers(batch, 3);  
+            mc      
+            .addMarkers(batch, 3);  
             map.fitBounds(bounds);
             
           }
         });
                   
-       
-      
-     
-      
-      
       var markers = {};
-      
-      
       google.maps.event.addListener(map, 'idle', function(){
-        
         
       });
 
-      
       function getRandomPoint() {
         var lat = 48.25 + (Math.random() - 0.5) * 14.5;
         var lng = 11.00 + (Math.random() - 0.5) * 36.0;
