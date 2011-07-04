@@ -41,7 +41,9 @@ if(isset($_GET['json'])){
     
     $input = $_GET['json'];
     
-    $input = json_decode($input, true);
+    
+    
+    $input = json_decode(stripslashes($input), true);
     
 }
 $output = array(ALERTS => array());
