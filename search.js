@@ -31,6 +31,7 @@ $(document).ready(
 						position : new google.maps.LatLng(value[1],
 								value[2]),
 						title : value[6],
+
 						flat : true
 					}));
 					SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));

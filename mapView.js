@@ -4,23 +4,35 @@
 
 (function( $ ){
 
-  $.fn.tooltip = function( options ) {  
+    $.mapView = function( options ) {  
 
-    var settings = {
-      'location'         : 'top',
-      'background-color' : 'blue'
+        var _settings = {
+            "config": {
+                "latlng" : null,
+                "address" : null,
+                "categories" : {
+                    "icons" : null,
+                    "show" : null,
+                    "showAll" : false
+                },
+                "markerClusterer" : 
+                {
+                    "gridSize": 50,
+                    "maxZoom": 15
+                }
+
+            }
+    
+        };
     };
 
     return this.each(function() {        
-      // If options exist, lets merge them
-      // with our default settings
-      if ( options ) { 
-        $.extend( settings, options );
-      }
+        if ( options ) { 
+            $.extend( _settings, options );
+        }
 
-      // Tooltip plugin code here
 
     });
 
-  };
+
 })( jQuery );
