@@ -6,7 +6,7 @@
 
     $.fn.mapView = function( options ) { 
     	var _map;
-    	var _dom = $(this);
+    	var _dom = $(this).get(0);
         var _settings = {
             "config": {
                 "latlng" : null,
@@ -21,7 +21,6 @@
                     "gridSize": 50,
                     "maxZoom": 15
                 }
-
             }
         };
         
@@ -33,15 +32,10 @@
 	    	   else
 	    		   options = _settings;
 	    	   
-	    	   $(this).data('map', _map = new google.maps.Map(_dom[0], options));
-	    	   console.log(_map);
+	    	   $(this).data('map', _map = new google.maps.Map(_dom, options));
 	       });
 	     },
-	     map : function ( options )
-	     {
-	    	 console.log($(this).data('map'));
-	    	 return  $(this).data('map');
-	     }
+	     map : function ( options ){return  $(this).data('map');}
 	};
 	
 	// Method calling logic

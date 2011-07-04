@@ -13,8 +13,8 @@
 	<body style="width: 100%; height: 100%; margin: 0;">
 		<div id="navigationForm">
 		<form action="#" method="POST">
-			<input type="text" name="location" id="address" />
-			<input type="button" value="Encode" onclick="codeAddress()">
+			<input type="text" name="address" id="address" />
+			<input type="button" value="Szukaj" onclick="SEARCH.codeAddress()">
 		</form>
 		</div>
 		<div id="map" style="width: 60%; height: 100%; float:left;"></div>

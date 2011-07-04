@@ -2,12 +2,11 @@
  * 
  */
 $(document).ready(
-	
 		
 	function() {
 		fxMap = {};
 		
-		var SEARCH = {};
+		SEARCH = {};
 		SEARCH.myOptions = {
 			zoom : 4,
 			center : new google.maps.LatLng(51.25, 21.00),
@@ -27,27 +26,28 @@ $(document).ready(
 		SEARCH.mc = new MarkerClusterer(SEARCH.map, [], SEARCH.mcOptions);
 		SEARCH.bounds = new google.maps.LatLngBounds();
 
-		$.ajax({
-			url : 'alertSearch.php',
-			success : function(data) {
-				var batch = [];
-				$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
-				$.map(data.alerts, function(value) {
-					batch.push(new google.maps.Marker({
-						position : new google.maps.LatLng(value[1],
-								value[2]),
-						title : value[6],
-						flat : true
-					}));
-					SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
-					
-					SEARCH.createListElement(value);
-				});
-
-				SEARCH.mc.addMarkers(batch, 3);
-				SEARCH.map.fitBounds(SEARCH.bounds);
-			}
-		});
+		SEARCH.getAlerts = function(){
+			$.ajax({
+				url : 'alertSearch.php',
+				success : function(data) {
+					var batch = [];
+					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
+					$.map(data.alerts, function(value) {
+						batch.push(new google.maps.Marker({
+							position : new google.maps.LatLng(value[1],
+									value[2]),
+							title : value[6],
+							flat : true
+						}));
+						SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
+						SEARCH.createListElement(value);
+					});
+	
+					SEARCH.mc.addMarkers(batch, 3);
+					SEARCH.map.fitBounds(SEARCH.bounds);
+				}
+			});
+		};	
 
 		SEARCH.markers = {};
 		google.maps.event.addListener(SEARCH.map, 'idle', function() {
@@ -99,14 +99,13 @@ $(document).ready(
 				+'<div class="discription"><b>'+value[6]+'</b><br>'+value[8]+'<br>'+value[9]+'</div>'
 				+'<div class=""></div>'
 			);
-			
 		};
 		
-		function codeAddress() {
+		SEARCH.codeAddress = function () {
 		    var address = document.getElementById("address").value;
-		    geocoder.geocode( { 'address': address}, function(results, status) {
+		    SEARCH.geocoder.geocode( { 'address': address}, function(results, status) {
 		      if (status == google.maps.GeocoderStatus.OK) {
-		        map.setCenter(results[0].geometry.location);
+		    	SEARCH.map.setCenter(results[0].geometry.location);
 		        var marker = new google.maps.Marker({
 		            map: map,
 		            position: results[0].geometry.location
