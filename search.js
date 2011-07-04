@@ -73,12 +73,6 @@ $(document).ready(
 			return batch;
 		};
 		
-		SEARCH.addAlert = function(options)
-		{
-			
-		}
-		
-		
 		SEARCH.createListElement = function(value){
 			$('<div/>', {
 				class: 'listElement_'+value[0],
