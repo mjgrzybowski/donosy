@@ -16,10 +16,9 @@
         		"autocomplete" : false,
         		"geocoder" : null,
         		"bounds" : null
-            }
+        	}
         };
         var _plugin = this;
-        var _pluginQ = $(this);
         
         var _geocoder;
         var _bounds;
@@ -27,6 +26,11 @@
         var _mapObject;
         
         var _result;
+        
+        $(".map-form-submit", _plugin).click(function(){
+        	alert('aa');
+        	_plugin.codeAddress();
+        });
         
         var methods = {
             init : function( options ) {

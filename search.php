@@ -37,7 +37,7 @@
 				
 				<input type="checkbox" name="status" value="" />
 				
-				<input type="button" value="Szukaj" onclick="$mapForm.codeAddress()">
+				<input type="button" value="Szukaj" class="map-form-submit">
 			</form>
 		</div>
 		<div id="map" style="width: 60%; height: 100%; float:left;"></div>
