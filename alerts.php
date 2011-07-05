@@ -45,9 +45,7 @@ if(isset($_GET['json'])){
       $input = base64_decode($_GET['json']);  
     }
     
-    
-    
-    $input = json_decode(stripslashes($input), true);
+    $input = json_decode($input, true);
     
 }
 $output = array(ALERTS => array());
@@ -61,12 +59,12 @@ if ($input['ne'] != null && $input['sw'] != null) {
     $lng_max_scaled = $input['ne']['lng'] * SCALE;
     
     for ($i = 0; $i < $results; $i++) {
-        $output[ALERTS][($i) * 10] = array(mt_rand($lat_min_scaled, $lat_max_scaled) / SCALE, mt_rand($lng_min_scaled, $lng_max_scaled) / SCALE, mt_rand(1, 10), generateDescription($words));
+        $output[ALERTS][($i+1) * 10] = array(mt_rand($lat_min_scaled, $lat_max_scaled) / SCALE, mt_rand($lng_min_scaled, $lng_max_scaled) / SCALE, mt_rand(1, 10), generateDescription($words));
     }
 } else {
     
     for ($i = 0; $i < RESULTS; $i++) {
-        $output[ALERTS][($i) * 10] = array(mt_rand(LAT_MIN_SCALED, LAT_MAX_SCALED) / SCALE, mt_rand(LNG_MIN_SCALED, LNG_MAX_SCALED) / SCALE, mt_rand(1, 10), generateDescription($words));
+        $output[ALERTS][($i+1) * 10] = array(mt_rand(LAT_MIN_SCALED, LAT_MAX_SCALED) / SCALE, mt_rand(LNG_MIN_SCALED, LNG_MAX_SCALED) / SCALE, mt_rand(1, 10), generateDescription($words));
     }
 }
 
