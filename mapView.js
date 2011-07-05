@@ -42,13 +42,13 @@
             },
             "buttons" : [
             {
-                "label" : "Nazwa przycisku",
-                "controlPosition" : google.maps.ControlPosition.BOTTOM_CENTER,
+                "label" : "Przycisk 1",
+                "controlPosition" : google.maps.ControlPosition.LEFT_TOP,
                 "click" : null
             },
             {
-                "label" : "Nazwa przycisku",
-                "controlPosition" : google.maps.ControlPosition.BOTTOM_CENTER,
+                "label" : "Przycisk 2",
+                "controlPosition" : google.maps.ControlPosition.RIGHT_TOP,
                 "click" : null
             },
     
@@ -76,25 +76,14 @@
                             maxZoom : 15
                         }));
                         
-                    var controlUI = document.createElement('DIV');
-                        
-                         controlUI.style.backgroundColor = 'white';
-                          controlUI.style.borderStyle = 'solid';
-                          controlUI.style.borderWidth = '2px';
-                          controlUI.style.cursor = 'pointer';
-                          controlUI.style.textAlign = 'center';
-                          controlUI.innerHTML = 'Home';
-
-
-                        //_map.controls[google.maps.ControlPosition.RIGHT_TOP].push(controlUI);
-    
+                    // TODO zrobić to lepiej
                     var _map = $(this).data('_map');    
                     $.each(_settings.buttons, function(key, button){
                         var controlUI = document.createElement('DIV');
                         
                          
-                          controlUI.className = 'map-control';
-                          controlUI.innerHTML = button.label;
+                        controlUI.className = 'map-control';
+                        controlUI.innerHTML = button.label;
 
 
                         _map.controls[button.controlPosition].push(controlUI);

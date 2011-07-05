@@ -10,6 +10,6 @@
    TODO customize this sample style
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
-
+body {font-family: 'Arial'; font-size: 16px;}
 .map-control {  display: inline-block;  background: url('../images/button-bg-grey.png') 50% 50% no-repeat; line-height: 16px; color: #000000 !important;  text-decoration: none;  padding: 1px 5px;  border: solid 1px #707070;  border-radius: 3px;  font-size: 12px;  position: relative; margin: 0 1px;}
-.map-control:hover {  text-decoration: none !important;}
+.map-control:hover {  text-decoration: underline !important; cursor: pointer;}
