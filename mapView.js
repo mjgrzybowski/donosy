@@ -7,6 +7,15 @@
     $.fn.mapView = function( options ) { 
     	
         var _dom = $(this).get(0);
+        var _plugin = this;
+        var _map;
+        var _mc;
+            eventhandler : function(event) {
+                
+                var event2 = event;
+                event2 = null;
+                alert('YUPI!');
+            };
         
         var _settings = {
             "config": {
@@ -61,23 +70,29 @@
                     if ( options )  
                         $.extend( _settings, options );
                     
-                    var latlng = new google.maps.LatLng(-34.397, 150.644);
                     var mapOptions = {
                         zoom: 6,
                         center: _settings.config.latlng,
                         mapTypeId: google.maps.MapTypeId.ROADMAP
                     };
 
-                    $(this).data('_map', new google.maps.Map(_dom, mapOptions));
-        
-                    $(this).data('markerClusterer',
-                        new MarkerClusterer($(this).data('_map'), [], {
-                            gridSize : 30,
-                            maxZoom : 15
-                        }));
+                    
+                    _plugin._map = new google.maps.Map(_dom, mapOptions);
+                   
+                    _plugin._mc =  new MarkerClusterer(_plugin._map, [], {
+                        gridSize : 30,
+                        maxZoom : 15
+                    });
+                    // settings events and callbacks    
+                    //google.maps.event.addListener(map, 'click', _plugin.eventHandler);
+                    
+                    
+                    // end events and callbacks
+                    
+    
                         
                     // TODO zrobić to lepiej
-                    var _map = $(this).data('_map');    
+                     
                     $.each(_settings.buttons, function(key, button){
                         var controlUI = document.createElement('DIV');
                         
@@ -86,13 +101,13 @@
                         controlUI.innerHTML = button.label;
 
 
-                        _map.controls[button.controlPosition].push(controlUI);
+                        _plugin._map.controls[button.controlPosition].push(controlUI);
 
                     }); 
                 });
             },
             map : function ( options ){
-                return  $(this).data('_map');
+                return  _plugin._map;
             },
             addAlerts : function ( alerts) { 
                 // TODO sprawdzanie czy Alert
@@ -107,24 +122,26 @@
                    
                 });
 	
-                $(this).data('markerClusterer').addMarkers(batch, 3);
+                _plugin._mc.addMarkers(batch, 3);
             },
             addAlert : function ( singleAlert ) {
                 // TODO sprawdzanie czy Alert
-            	var mc = $(this).data('markerClusterer');
-            	
-                mc.addMarker( new google.maps.Marker({
+                
+                _plugin._mc.addMarker( new google.maps.Marker({
                     position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
                     title : singleAlert['name']
                         
                 }));
             },
             clearAlerts : function (){
-                $(this).data('markerClusterer').clearAlerts();
+                _plugin._mc.clearAlerts();
             }
              
         };
 	
+        
+        
+        
         // Method calling logic
         if ( methods[options] ) {
             return methods[ options ].apply( this, Array.prototype.slice.call( arguments, 1 ));

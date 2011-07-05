@@ -1,0 +1,15 @@
+{
+    "categories" : [
+        
+        {"dziury" : [ 
+            [1, "w ulicy" ],
+            [2, "w chodniku" ]
+        ]},
+        
+        {"zniszczone" : [
+            [3, "ławka" ],
+            [4, "latarnia" ]
+        ]}
+
+    ]
+}
