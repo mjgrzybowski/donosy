@@ -61,7 +61,6 @@
                     if ( options )  
                         $.extend( _settings, options );
                     
-                    var latlng = new google.maps.LatLng(-34.397, 150.644);
                     var mapOptions = {
                         zoom: 6,
                         center: _settings.config.latlng,
@@ -75,6 +74,16 @@
                             gridSize : 30,
                             maxZoom : 15
                         }));
+                    // settings events and callbacks    
+                    google.maps.event.addListener(map, 'click', function (event) {
+                        var test = event;
+                        var test2 = test;
+                    });
+                    
+                    
+                    // end events and callbacks
+                    
+    
                         
                     // TODO zrobić to lepiej
                     var _map = $(this).data('_map');    
@@ -111,7 +120,7 @@
             },
             addAlert : function ( singleAlert ) {
                 // TODO sprawdzanie czy Alert
-            	var mc = $(this).data('markerClusterer');
+                var mc = $(this).data('markerClusterer');
             	
                 mc.addMarker( new google.maps.Marker({
                     position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
