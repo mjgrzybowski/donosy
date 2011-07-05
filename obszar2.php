@@ -103,18 +103,10 @@
 						m = null;
 					});
 					g.event.addListener(marker, "click", function() {
-						/* if (marker = markers[0]){
-							var marker = createMarker(markers[0].getPosition());
-							markers.push(marker);
-							google.maps.event.clearListeners(map, 'click');
-							var vmarker = createVMarker(event.latLng);
-							vmarkers.push(vmarker);
-							vmarker = null;
-							var path = polyLine.getPath();
-							path.push(event.latLng);
-							marker = null;
+						if (marker == markers[0]){
 							
-						} */
+							
+						}
 						for (var m = 0; m < markers.length; m++) {
 							if (markers[m] == marker) {
 								marker.setMap(null);
@@ -216,6 +208,8 @@
 					});
 					return marker;
 				};
+				
+				var move
 
 				var moveVMarker = function(index) {
 					var newpos = markers[index].getPosition();
@@ -261,7 +255,8 @@
 					}
 					index = null;
 				};
-
+				
+				
 				window.onload = function() {
 					initMap('map');
 					initPolyline();
