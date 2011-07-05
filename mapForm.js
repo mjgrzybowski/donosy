@@ -12,6 +12,7 @@
             "config" : {
         		"formId" : "mapForm",
         		"mapView" : null,
+        		"mapObject" : null,
         		"autocomplete" : false,
         		"geocoder" : null,
         		"bounds" : null
@@ -23,6 +24,9 @@
         var _geocoder;
         var _bounds;
         var _mapView;
+        var _mapObject;
+        
+        var _result;
         
         var methods = {
             init : function( options ) {
@@ -31,15 +35,12 @@
                         $.extend( _settings, options );
                  
                     _plugin._mapView = _settings["config"]["mapView"];
-                    $(this).data("mapView", _plugin._mapView);
+                    _plugin._mapObject = _settings["config"]["mapObject"];
                     _plugin._geocoder = new google.maps.Geocoder();
-                    $(this).data("geocoder", _plugin._geocoder);
                     _plugin._bounds = new google.maps.LatLngBounds();
-                    $(this).data("bounds", _plugin._bounds );
                     
                     if (_settings['config']['autocomplete']){
                     	$("#address").autocomplete({
-              		      //This bit uses the geocoder to fetch address values
               		      source: function(request, response) {
                     		_plugin._geocoder.geocode( {'address': request.term, 'region' : 'pl'}, function(results, status) {
               		          response($.map(results, function(item) {
@@ -64,15 +65,12 @@
         	},
         	geocoder : function ()
             {
-            	return $(this).data('geocoder');
+            	return _plugin._geocoder;
             }
         	
-        	
         };
-        
-       
-        
-        createListElement = function(value){
+         
+        this.createListElement = function(value){
 			$('<div/>', {
 				class: 'listElement_'+value[0],
 				id: value[0], 
@@ -93,7 +91,7 @@
 			);
 		};
 		
-		getAlerts = function(data){
+		this.getAlerts = function(data){
 			data = json_encode(data);
 			data = base64_encode(data);
 			$.ajax({
@@ -106,51 +104,49 @@
 			});
 		};
 		
-		createMarkersAndListElem = function(data)
+		this.createMarkersAndListElem = function(data)
 		{    			
 			if (data != undefined)
 			{
-//			SEARCH.results = data.alerts; 
-    			$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
+				_plugin._results = data.alerts; 
+    			
+				$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
     			$.map(data.alerts, function(value) {
     				singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
-    				_plugin._mapView('addAlert',singleAlert);
+    				_plugin._mapObject.mapView('addAlert',singleAlert);
+
     				_plugin._bounds.extend(new google.maps.LatLng(value[1], value[2]));
     				_plugin.createListElement(value);
     			});
-
-    			var map = _plugin._bounds.mapView;
-    			map("_map").fitBounds($(this).data('bounds'));
+    			_plugin._mapView._map.fitBounds(_plugin._bounds);
 			}
 		};
 		
 		this.codeAddress = function (address) {
 			if(!address)
 				var address = document.getElementById("address").value;
-			$(this).data('geocoder').geocode( {'address' : address}, function(results, status) {
-		      if (status == google.maps.GeocoderStatus.OK) {
-		    	var map = _plugin._mapView('_map');
-		    	
-		    	map.setCenter(results[0].geometry.location);
-		    	viewport = results[0].geometry.viewport;
-		    	map.fitBounds(viewport);
-		    	
-		    	data = {
-		    	'ne' : {
-		    			'lat': viewport.getNorthEast().lat(), 
-		    			'lng': viewport.getNorthEast().lng()
-		    		},
-		    	'sw' : {
-		    			'lat': viewport.getSouthWest().lat(), 
-		    			'lng': viewport.getSouthWest().lng()
-		    		}
-		    	};
-		    	
-		    	_plugin.getAlerts(data);
-		      }
-		    });
+				_plugin._geocoder.geocode( {'address' : address}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+				    	var map = _plugin._mapView._map;
+				    	map.setCenter(results[0].geometry.location);
+				    	viewport = results[0].geometry.viewport;
+				    	map.fitBounds(viewport);
+				    	
+				    	data = {
+				    		'ne' : 	{
+				    			'lat': viewport.getNorthEast().lat(), 
+				    			'lng': viewport.getNorthEast().lng()
+				    		},
+				    		'sw' : {
+				    			'lat': viewport.getSouthWest().lat(), 
+				    			'lng': viewport.getSouthWest().lng()
+				    		}
+				    	};
+				    	_plugin.getAlerts(data);
+					}
+			    });
 		};
-	
+		
        
         // Method calling logic
         if ( methods[options] ) {

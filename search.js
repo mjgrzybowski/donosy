@@ -12,14 +12,15 @@ $(document).ready(
 		};
 		
 		var mapObject = $('#map');
-		var mapO = mapObject.mapView(SEARCH.myOptions);
+		var mapView = mapObject.mapView(SEARCH.myOptions);
 		
 		var form = $('#navigationForm');
 		form.mapForm({"config" : {
-			"mapView" : mapO,
+			"mapView" : mapView,
+			"mapObject" : mapObject,
 			"autocomplete" : true
 		}});
-		
+/*		
 		SEARCH.results = {};
 		
 		SEARCH.createMarkersAndListElem = function(data)
@@ -103,7 +104,7 @@ $(document).ready(
 		    });
 		};
 		
-/*		
+		
 		$("#address").autocomplete({
 		      //This bit uses the geocoder to fetch address values
 		      source: function(request, response) {
