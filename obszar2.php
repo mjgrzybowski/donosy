@@ -47,7 +47,7 @@
 					};
 					polyLine = new g.Polygon(polyOptions);
 					polyLine.setMap(map);
-					tmpPolyLine = new g.Polygon(tmpPolyOptions);
+					tmpPolyLine = new g.Polyline(tmpPolyOptions);
 					tmpPolyLine.setMap(map);
 				};
 
@@ -103,6 +103,18 @@
 						m = null;
 					});
 					g.event.addListener(marker, "click", function() {
+						/* if (marker = markers[0]){
+							var marker = createMarker(markers[0].getPosition());
+							markers.push(marker);
+							google.maps.event.clearListeners(map, 'click');
+							var vmarker = createVMarker(event.latLng);
+							vmarkers.push(vmarker);
+							vmarker = null;
+							var path = polyLine.getPath();
+							path.push(event.latLng);
+							marker = null;
+							
+						} */
 						for (var m = 0; m < markers.length; m++) {
 							if (markers[m] == marker) {
 								marker.setMap(null);
@@ -258,6 +270,6 @@
   </head>
   <body  style="width: 100%; height: 100%; margin: 0;">
     <div id="map" style="width: 100%; height: 100%;"></div> 
-
+<?php echo $_POST ?>
   </body>
 </html>
