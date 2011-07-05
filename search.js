@@ -3,9 +3,7 @@
  */
 $(document).ready(
 		
-	function() {
-		fxMap = {};
-		
+	function() {		
 		SEARCH = {};
 		SEARCH.myOptions = {
 			zoom : 4,
@@ -14,17 +12,33 @@ $(document).ready(
 		};
 		
 		var mapObject = $('#map');
-		mapObject.mapView(SEARCH.myOptions);
+		var mapO = mapObject.mapView(SEARCH.myOptions);
 		
-		SEARCH.map = mapObject.mapView('map');
-		SEARCH.geocoder = new google.maps.Geocoder();
+		var form = $('#navigationForm');
+		form.mapForm({"config" : {
+			"mapView" : mapO,
+			"autocomplete" : true
+		}});
+		
 		SEARCH.results = {};
 		
-		SEARCH.mcOptions = {
-			gridSize : 30,
-			maxZoom : 15
-		};
-		SEARCH.bounds = new google.maps.LatLngBounds();
+		SEARCH.createMarkersAndListElem = function(data)
+		{
+			var batch = [];
+			
+			SEARCH.results = data.alerts; 
+			$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
+			$.map(data.alerts, function(value) {
+				singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
+				mapObject.mapView('addAlert',singleAlert);
+
+				SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
+				SEARCH.createListElement(value);
+			});
+
+			SEARCH.map.fitBounds(SEARCH.bounds);
+		}
+		
 		
 		SEARCH.getAlerts = function(data){
 			data = json_encode(data);
@@ -34,49 +48,15 @@ $(document).ready(
 				dataType: 'json',
 				data: 'json='+data,
 				success : function(data) {
-					var batch = [];
 					
-					SEARCH.results = data.alerts; 
+					SEARCH.createMarkersAndListElem(data)
 					
-					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
-					$.map(data.alerts, function(value) {
-						singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
-						mapObject.mapView('addAlert',singleAlert);
-		
-						SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
-						SEARCH.createListElement(value);
-					});
-	
-					SEARCH.map.fitBounds(SEARCH.bounds);
+			
 				}
 			});
 		};	
 
-		SEARCH.markers = {};
-		google.maps.event.addListener(SEARCH.map, 'idle', function() {
-
-		});
-
-		this.getRandomPoint = function() {
-			var lat = 48.25 + (Math.random() - 0.5) * 14.5;
-			var lng = 11.00 + (Math.random() - 0.5) * 36.0;
-			return new google.maps.LatLng(Math.round(lat * 10) / 10, Math
-					.round(lng * 10) / 10);
-		};
-
-		SEARCH.getWeatherMarkers = function(n) {
-			var batch = [];
-			for ( var i = 0; i < n; ++i) {
-
-				batch.push(new google.maps.Marker({
-					position : SEARCH.getRandomPoint(),
-
-					title : 'Weather marker'
-				}));
-			}
-			return batch;
-		};
-		
+			
 		SEARCH.createListElement = function(value){
 			$('<div/>', {
 				class: 'listElement_'+value[0],
@@ -105,7 +85,7 @@ $(document).ready(
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
 		    	viewport = results[0].geometry.viewport;
-		    	SEARCH.map.fitBounds(results[0].geometry.viewport);
+		    	SEARCH.map.fitBounds(viewport);
 		    	
 		    	data = {
 		    	'ne' : {
@@ -123,7 +103,7 @@ $(document).ready(
 		    });
 		};
 		
-		
+/*		
 		$("#address").autocomplete({
 		      //This bit uses the geocoder to fetch address values
 		      source: function(request, response) {
@@ -143,11 +123,11 @@ $(document).ready(
 		    	  SEARCH.codeAddress(ui.item.value);
 		      }
 		 },
-	      {
+	     {
 	    	  'scrollHeight' : '150px'
-	      }
+	     }
 	     );
-		
+		*/
 		
 		
 		

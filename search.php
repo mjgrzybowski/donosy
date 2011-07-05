@@ -12,7 +12,8 @@
             <link href="css/main.css" media="screen" rel="stylesheet" type="text/css" />
 		<script src="search.js"></script>
 		<script src="php.default.min.js"></script>
-
+		<script src="mapForm.js"></script>
+		
 		<style>
 			.ui-autocomplete {
 			    background-color: white;
@@ -22,13 +23,21 @@
 			    padding-left: 0px;
 			}
 		</style>
-
   	</head>
 	<body style="width: 100%; height: 100%; margin: 0;">
 		<div id="navigationForm">
 			<form action="#" method="POST">
 				<input type="text" name="address" id="address" />
-				<input type="button" value="Szukaj" onclick="SEARCH.codeAddress()">
+				
+				<select id="category" >
+				</select>
+				
+				<select id="support" >
+				</select>
+				
+				<input type="checkbox" name="status" value="" />
+				
+				<input type="button" value="Szukaj" onclick="$mapForm.codeAddress()">
 			</form>
 		</div>
 		<div id="map" style="width: 60%; height: 100%; float:left;"></div>
