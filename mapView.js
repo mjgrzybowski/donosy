@@ -111,7 +111,9 @@
             },
             addAlert : function ( singleAlert ) {
                 // TODO sprawdzanie czy Alert
-                $(this).data('markerClusterer', new google.maps.Marker({
+            	var mc = $(this).data('markerClusterer');
+            	
+                mc.addMarker( new google.maps.Marker({
                     position : new google.maps.LatLng(singleAlert['lat'], singleAlert['lng']),
                     title : singleAlert['name']
                         

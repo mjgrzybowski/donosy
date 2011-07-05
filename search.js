@@ -53,7 +53,7 @@ $(document).ready(
 						SEARCH.createListElement(value);
 					});
 	
-					SEARCH.mc.addMarkers(batch, 3);
+					//SEARCH.mc.addMarkers(batch, 3);
 					SEARCH.map.fitBounds(SEARCH.bounds);
 				}
 			});
