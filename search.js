@@ -26,26 +26,28 @@ $(document).ready(
 		SEARCH.mc = new MarkerClusterer(SEARCH.map, [], SEARCH.mcOptions);
 		SEARCH.bounds = new google.maps.LatLngBounds();
 		
-		SEARCH.getAlerts = function(ne, sw){
-			data = { 'ne': ne, 'sw': sw };
-			data2 = json_encode(data);
+		SEARCH.getAlerts = function(data){
+			//data = '{ \'ne\': { \'lat\': '+ ne.lat +', \'lng\': '+ne.lng+' } , \'sw\': '+sw+' }';
+			data = json_encode(data);
+			data = base64_encode(data);
+			
 			$.ajax({
 				url : 'alertSearch.php',
 				dataType: 'json',
-				data: data2,
+				data: 'json='+data,
 				success : function(data) {
 					var batch = [];
 					$('#list').html('Znaleziono <span class="size">'+data.alerts.length+'</span> alertów dla podanych kryteriów')
 					$.map(data.alerts, function(value) {
-						batch.push(new google.maps.Marker({
-							position : new google.maps.LatLng(value[1],
-									value[2]),
-							title : value[6],
-							flat : true
-						}));
+					//	batch.push(new google.maps.Marker({
+					//		position : new google.maps.LatLng(value[1],
+					//				value[2]),
+					//		title : value[6],
+					//		flat : true
+					//	}));
 						
-					//	singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
-					//	mapObject.mapView('addAlert',singleAlert);
+						singleAlert = {'lat': value[1], 'lng': value[2], 'name': value[6] };
+						mapObject.mapView('addAlert',singleAlert);
 		
 						SEARCH.bounds.extend(new google.maps.LatLng(value[1], value[2]));
 						SEARCH.createListElement(value);
@@ -109,18 +111,21 @@ $(document).ready(
 		    SEARCH.geocoder.geocode( {'address' : address}, function(results, status) {
 		      if (status == google.maps.GeocoderStatus.OK) {
 		    	SEARCH.map.setCenter(results[0].geometry.location);
-		    	latlng = results[0].geometry.viewport;
+		    	viewport = results[0].geometry.viewport;
 		    	SEARCH.map.fitBounds(results[0].geometry.viewport);
-		    	ne = {
-		    			'lat': latlng.getNorthEast().lat(), 
-		    			'lng': latlng.getNorthEast().lng()
-		    		};
-		    	sw = {
-		    			'lat': latlng.getSouthWest().lat(), 
-		    			'lng': latlng.getSouthWest().lng()
-		    		};
 		    	
-		    	SEARCH.getAlerts(ne, sw);
+		    	data = {
+		    	'ne' : {
+		    			'lat': viewport.getNorthEast().lat(), 
+		    			'lng': viewport.getNorthEast().lng()
+		    		},
+		    	'sw' : {
+		    			'lat': viewport.getSouthWest().lat(), 
+		    			'lng': viewport.getSouthWest().lng()
+		    		}
+		    	};
+		    	
+		    	SEARCH.getAlerts(data);
 		      }
 		    });
 		};
