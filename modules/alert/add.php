@@ -14,7 +14,7 @@ if ((($_FILES["file"]["type"] == "image/gif")
         || ($_FILES["file"]["type"] == "image/pjpeg"))
         && ($_FILES["file"]["size"] < 20000)) {
     if ($_FILES["file"]["error"] > 0) {
-        echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+        $output['status'] = STATUS_SOMETHING_WENT_WRONG;
     } else {
         $filename = $alert['id'] . '-' . $_FILES["file"]["name"];
         move_uploaded_file($_FILES["file"]["tmp_name"], UPLOAD_PATH . $filename);

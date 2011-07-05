@@ -60,11 +60,7 @@
                 };
                 polygon = new g.Polygon(polygonOptions);
                 polygon.setMap(map);
-                g.event.addListener(polygon, "click", function(event){
-                    console.log('wykryto klik');
-                    g.event.addListener(polygon, "mousemove", function(event){console.log(event);});
-                    
-                });
+                
                 
             };
 
