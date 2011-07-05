@@ -38,6 +38,24 @@
                 mapOptions = null;
             };
 
+<<<<<<< HEAD
+				var initPolyline = function() {
+					var polyOptions = {
+						strokeColor: "#3355FF",
+						strokeOpacity: 0.8,
+						strokeWeight: 4
+					};
+					var tmpPolyOptions = {
+						strokeColor: "#3355FF",
+						strokeOpacity: 0.4,
+						strokeWeight: 4
+					};
+					polyLine = new g.Polygon(polyOptions);
+					polyLine.setMap(map);
+					tmpPolyLine = new g.Polyline(tmpPolyOptions);
+					tmpPolyLine.setMap(map);
+				};
+=======
             var initPolyline = function() {
                 var polyOptions = {
                     strokeColor: "#3355FF",
@@ -63,6 +81,7 @@
                 
                 
             };
+>>>>>>> 04e4e5d8053715d93206186934e0fac1b6212c88
 
             var mapLeftClick = function(event) {
                 if (event.latLng && allowCreation == true) {
@@ -80,6 +99,147 @@
                 event = null;
             };
 
+<<<<<<< HEAD
+				var createMarker = function(point) {
+					var imageNormal = new g.MarkerImage(
+						"square.png",
+						new g.Size(11, 11),
+						new g.Point(0, 0),
+						new g.Point(6, 6)
+					);
+					var imageHover = new g.MarkerImage(
+						"square_over.png",
+						new g.Size(11, 11),
+						new g.Point(0, 0),
+						new g.Point(6, 6)
+					);
+					var marker = new g.Marker({
+						position: point,
+						map: map,
+						icon: imageNormal,
+						draggable: true
+					});
+					g.event.addListener(marker, "mouseover", function() {
+						marker.setIcon(imageHover);
+					});
+					g.event.addListener(marker, "mouseout", function() {
+						marker.setIcon(imageNormal);
+					});
+					g.event.addListener(marker, "drag", function() {
+						for (var m = 0; m < markers.length; m++) {
+							if (markers[m] == marker) {
+								polyLine.getPath().setAt(m, marker.getPosition());
+								moveVMarker(m);
+								break;
+							}
+						}
+						m = null;
+					});
+					g.event.addListener(marker, "click", function() {
+						for (var m = 0; m < markers.length; m++) {
+							if (markers[m] == marker) {
+								marker.setMap(null);
+								markers.splice(m, 1);
+								polyLine.getPath().removeAt(m);
+								removeVMarkers(m);
+								break;
+							}
+						}
+						m = null;
+					});
+					return marker;
+				};
+
+				var createVMarker = function(point) {
+					var prevpoint = markers[markers.length-2].getPosition();
+					var imageNormal = new g.MarkerImage(
+						"square_transparent.png",
+						new g.Size(11, 11),
+						new g.Point(0, 0),
+						new g.Point(6, 6)
+					);
+					var imageHover = new g.MarkerImage(
+						"square_transparent_over.png",
+						new g.Size(11, 11),
+						new g.Point(0, 0),
+						new g.Point(6, 6)
+					);
+					var marker = new g.Marker({
+						position: new g.LatLng(
+							point.lat() - (0.5 * (point.lat() - prevpoint.lat())),
+							point.lng() - (0.5 * (point.lng() - prevpoint.lng()))
+						),
+						map: map,
+						icon: imageNormal,
+						draggable: true
+					});
+					g.event.addListener(marker, "mouseover", function() {
+						marker.setIcon(imageHover);
+					});
+					g.event.addListener(marker, "mouseout", function() {
+						marker.setIcon(imageNormal);
+					});
+					g.event.addListener(marker, "dragstart", function() {
+						for (var m = 0; m < vmarkers.length; m++) {
+							if (vmarkers[m] == marker) {
+								var tmpPath = tmpPolyLine.getPath();
+								tmpPath.push(markers[m].getPosition());
+								tmpPath.push(vmarkers[m].getPosition());
+								tmpPath.push(markers[m+1].getPosition());
+								break;
+							}
+						}
+						m = null;
+					});
+					g.event.addListener(marker, "drag", function() {
+						for (var m = 0; m < vmarkers.length; m++) {
+							if (vmarkers[m] == marker) {
+								tmpPolyLine.getPath().setAt(1, marker.getPosition());
+								break;
+							}
+						}
+						m = null;
+					});
+					g.event.addListener(marker, "dragend", function() {
+						for (var m = 0; m < vmarkers.length; m++) {
+							if (vmarkers[m] == marker) {
+								var newpos = marker.getPosition();
+								var startMarkerPos = markers[m].getPosition();
+								var firstVPos = new g.LatLng(
+									newpos.lat() - (0.5 * (newpos.lat() - startMarkerPos.lat())),
+									newpos.lng() - (0.5 * (newpos.lng() - startMarkerPos.lng()))
+								);
+								var endMarkerPos = markers[m+1].getPosition();
+								var secondVPos = new g.LatLng(
+									newpos.lat() - (0.5 * (newpos.lat() - endMarkerPos.lat())),
+									newpos.lng() - (0.5 * (newpos.lng() - endMarkerPos.lng()))
+								);
+								var newVMarker = createVMarker(secondVPos);
+								newVMarker.setPosition(secondVPos);//apply the correct position to the vmarker
+								var newMarker = createMarker(newpos);
+								markers.splice(m+1, 0, newMarker);
+								polyLine.getPath().insertAt(m+1, newpos);
+								marker.setPosition(firstVPos);
+								vmarkers.splice(m+1, 0, newVMarker);
+								tmpPolyLine.getPath().removeAt(2);
+								tmpPolyLine.getPath().removeAt(1);
+								tmpPolyLine.getPath().removeAt(0);
+								newpos = null;
+								startMarkerPos = null;
+								firstVPos = null;
+								endMarkerPos = null;
+								secondVPos = null;
+								newVMarker = null;
+								newMarker = null;
+								break;
+							}
+						}
+					});
+					return marker;
+				};
+				
+				var move
+=======
             var createMarker = function(point) {
                 var imageNormal = new g.MarkerImage(
                 "square.png",
@@ -227,6 +387,7 @@
                 });
                 return marker;
             };
+>>>>>>> 04e4e5d8053715d93206186934e0fac1b6212c88
 
             var moveVMarker = function(index) {
                 var newpos = markers[index].getPosition();
@@ -250,6 +411,42 @@
                 index = null;
             };
 
+<<<<<<< HEAD
+				var removeVMarkers = function(index) {
+					if (markers.length > 0) {//clicked marker has already been deleted
+						if (index != markers.length) {
+							vmarkers[index].setMap(null);
+							vmarkers.splice(index, 1);
+						} else {
+							vmarkers[index-1].setMap(null);
+							vmarkers.splice(index-1, 1);
+						}
+					}
+					if (index != 0 && index != markers.length) {
+						var prevpos = markers[index-1].getPosition();
+						var newpos = markers[index].getPosition();
+						vmarkers[index-1].setPosition(new g.LatLng(
+							newpos.lat() - (0.5 * (newpos.lat() - prevpos.lat())),
+							newpos.lng() - (0.5 * (newpos.lng() - prevpos.lng()))
+						));
+						prevpos = null;
+						newpos = null;
+					}
+					index = null;
+				};
+				
+				
+				window.onload = function() {
+					initMap('map');
+					initPolyline();
+				};
+	</script>
+  </head>
+  <body  style="width: 100%; height: 100%; margin: 0;">
+    <div id="map" style="width: 100%; height: 100%;"></div> 
+<?php echo $_POST ?>
+  </body>
+=======
             var removeVMarkers = function(index) {
                 if (markers.length > 0) {//clicked marker has already been deleted
                     if (index != markers.length) {
@@ -283,4 +480,5 @@
         <div id="map" style="width: 100%; height: 100%;"></div> 
 
     </body>
+>>>>>>> 04e4e5d8053715d93206186934e0fac1b6212c88
 </html>
