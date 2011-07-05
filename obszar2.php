@@ -1,44 +1,43 @@
 
 <!DOCTYPE html>
 <html style="width: 100%; height: 100%;">
-    <head>
-        <title></title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <script src="http://code.jquery.com/jquery-1.6.2.js" type="text/javascript"></script> 
-        <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script> 
-        <script src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markermanager/1.0/src/markermanager.js" type="text/javascript"></script> 
-        <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js" type="text/javascript"></script> 
-        <script src="mapView.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            var map = null;
-            var activePoly;
-            var tmpPolyLine;
-            var polygon;
-            var markers = [];
-            var vmarkers = [];
-            var g = google.maps;
-            var mvcArray;
-            var allowCreation = true;
+  <head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src="http://code.jquery.com/jquery-1.6.2.js" type="text/javascript"></script> 
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script> 
+    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/tags/markermanager/1.0/src/markermanager.js" type="text/javascript"></script> 
+    <script src="http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js" type="text/javascript"></script> 
+	<script src="mapView.js" type="text/javascript"></script>
+	<script type="text/javascript">
+				var map = null;
+				var polyLine;
+				var tmpPolyLine;
+				var markers = [];
+				var vmarkers = [];
+				var g = google.maps;
 
-            var initMap = function(mapHolder) {
-                markers = [];
-                vmarkers = [];
-                var mapOptions = {
-                    zoom: 6,
-                    center: new g.LatLng(52.00, 21.00), 
-                    mapTypeId: g.MapTypeId.ROADMAP,
-                    draggableCursor: 'auto',
-                    draggingCursor: 'move',
-                    disableDoubleClickZoom: true
-                };
-                map = new g.Map(document.getElementById(mapHolder), mapOptions);
-                g.event.addListener(map, "click", mapLeftClick);
-                
-                mapHolder = null;
-                mapOptions = null;
-            };
+				var initMap = function(mapHolder) {
+					markers = [];
+					vmarkers = [];
+					var mapOptions = {
+						zoom: 6,
+						center: new g.LatLng(52.00, 21.00), 
+						mapTypeId: g.MapTypeId.ROADMAP,
+						draggableCursor: 'auto',
+						draggingCursor: 'move',
+						disableDoubleClickZoom: true
+					};
+					map = new g.Map(document.getElementById(mapHolder), mapOptions);
+					g.event.addListener(map, "click", mapLeftClick);
+					mapHolder = null;
+					mapOptions = null;
+				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 04e4e5d... .
 				var initPolyline = function() {
 					var polyOptions = {
 						strokeColor: "#3355FF",
@@ -52,6 +51,7 @@
 					};
 					polyLine = new g.Polygon(polyOptions);
 					polyLine.setMap(map);
+<<<<<<< HEAD
 					tmpPolyLine = new g.Polyline(tmpPolyOptions);
 					tmpPolyLine.setMap(map);
 				};
@@ -82,24 +82,32 @@
                 
             };
 >>>>>>> 04e4e5d8053715d93206186934e0fac1b6212c88
+=======
+					tmpPolyLine = new g.Polygon(tmpPolyOptions);
+					tmpPolyLine.setMap(map);
+				};
+>>>>>>> parent of 04e4e5d... .
 
-            var mapLeftClick = function(event) {
-                if (event.latLng && allowCreation == true) {
-                    var marker = createMarker(event.latLng);
-                    markers.push(marker);
-                    if (markers.length != 1) {
-                        var vmarker = createVMarker(event.latLng);
-                        vmarkers.push(vmarker);
-                        vmarker = null;
-                    }
-                    var path = activePoly.getPath();
-                    path.push(event.latLng);
-                    marker = null;
-                }
-                event = null;
-            };
+				var mapLeftClick = function(event) {
+					if (event.latLng) {
+						var marker = createMarker(event.latLng);
+						markers.push(marker);
+						if (markers.length != 1) {
+							var vmarker = createVMarker(event.latLng);
+							vmarkers.push(vmarker);
+							vmarker = null;
+						}
+						var path = polyLine.getPath();
+						path.push(event.latLng);
+						marker = null;
+					}
+					event = null;
+				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 04e4e5d... .
 				var createMarker = function(point) {
 					var imageNormal = new g.MarkerImage(
 						"square.png",
@@ -149,6 +157,7 @@
 					});
 					return marker;
 				};
+<<<<<<< HEAD
 
 				var createVMarker = function(point) {
 					var prevpoint = markers[markers.length-2].getPosition();
@@ -388,30 +397,123 @@
                 return marker;
             };
 >>>>>>> 04e4e5d8053715d93206186934e0fac1b6212c88
+=======
 
-            var moveVMarker = function(index) {
-                var newpos = markers[index].getPosition();
-                if (index != 0) {
-                    var prevpos = markers[index-1].getPosition();
-                    vmarkers[index-1].setPosition(new g.LatLng(
-                    newpos.lat() - (0.5 * (newpos.lat() - prevpos.lat())),
-                    newpos.lng() - (0.5 * (newpos.lng() - prevpos.lng()))
-                ));
-                    prevpos = null;
-                }
-                if (index != markers.length - 1) {
-                    var nextpos = markers[index+1].getPosition();
-                    vmarkers[index].setPosition(new g.LatLng(
-                    newpos.lat() - (0.5 * (newpos.lat() - nextpos.lat())), 
-                    newpos.lng() - (0.5 * (newpos.lng() - nextpos.lng()))
-                ));
-                    nextpos = null;
-                }
-                newpos = null;
-                index = null;
-            };
+				var createVMarker = function(point) {
+					var prevpoint = markers[markers.length-2].getPosition();
+					var imageNormal = new g.MarkerImage(
+						"square_transparent.png",
+						new g.Size(11, 11),
+						new g.Point(0, 0),
+						new g.Point(6, 6)
+					);
+					var imageHover = new g.MarkerImage(
+						"square_transparent_over.png",
+						new g.Size(11, 11),
+						new g.Point(0, 0),
+						new g.Point(6, 6)
+					);
+					var marker = new g.Marker({
+						position: new g.LatLng(
+							point.lat() - (0.5 * (point.lat() - prevpoint.lat())),
+							point.lng() - (0.5 * (point.lng() - prevpoint.lng()))
+						),
+						map: map,
+						icon: imageNormal,
+						draggable: true
+					});
+					g.event.addListener(marker, "mouseover", function() {
+						marker.setIcon(imageHover);
+					});
+					g.event.addListener(marker, "mouseout", function() {
+						marker.setIcon(imageNormal);
+					});
+					g.event.addListener(marker, "dragstart", function() {
+						for (var m = 0; m < vmarkers.length; m++) {
+							if (vmarkers[m] == marker) {
+								var tmpPath = tmpPolyLine.getPath();
+								tmpPath.push(markers[m].getPosition());
+								tmpPath.push(vmarkers[m].getPosition());
+								tmpPath.push(markers[m+1].getPosition());
+								break;
+							}
+						}
+						m = null;
+					});
+					g.event.addListener(marker, "drag", function() {
+						for (var m = 0; m < vmarkers.length; m++) {
+							if (vmarkers[m] == marker) {
+								tmpPolyLine.getPath().setAt(1, marker.getPosition());
+								break;
+							}
+						}
+						m = null;
+					});
+					g.event.addListener(marker, "dragend", function() {
+						for (var m = 0; m < vmarkers.length; m++) {
+							if (vmarkers[m] == marker) {
+								var newpos = marker.getPosition();
+								var startMarkerPos = markers[m].getPosition();
+								var firstVPos = new g.LatLng(
+									newpos.lat() - (0.5 * (newpos.lat() - startMarkerPos.lat())),
+									newpos.lng() - (0.5 * (newpos.lng() - startMarkerPos.lng()))
+								);
+								var endMarkerPos = markers[m+1].getPosition();
+								var secondVPos = new g.LatLng(
+									newpos.lat() - (0.5 * (newpos.lat() - endMarkerPos.lat())),
+									newpos.lng() - (0.5 * (newpos.lng() - endMarkerPos.lng()))
+								);
+								var newVMarker = createVMarker(secondVPos);
+								newVMarker.setPosition(secondVPos);//apply the correct position to the vmarker
+								var newMarker = createMarker(newpos);
+								markers.splice(m+1, 0, newMarker);
+								polyLine.getPath().insertAt(m+1, newpos);
+								marker.setPosition(firstVPos);
+								vmarkers.splice(m+1, 0, newVMarker);
+								tmpPolyLine.getPath().removeAt(2);
+								tmpPolyLine.getPath().removeAt(1);
+								tmpPolyLine.getPath().removeAt(0);
+								newpos = null;
+								startMarkerPos = null;
+								firstVPos = null;
+								endMarkerPos = null;
+								secondVPos = null;
+								newVMarker = null;
+								newMarker = null;
+								break;
+							}
+						}
+					});
+					return marker;
+				};
+>>>>>>> parent of 04e4e5d... .
+
+				var moveVMarker = function(index) {
+					var newpos = markers[index].getPosition();
+					if (index != 0) {
+						var prevpos = markers[index-1].getPosition();
+						vmarkers[index-1].setPosition(new g.LatLng(
+							newpos.lat() - (0.5 * (newpos.lat() - prevpos.lat())),
+							newpos.lng() - (0.5 * (newpos.lng() - prevpos.lng()))
+						));
+						prevpos = null;
+					}
+					if (index != markers.length - 1) {
+						var nextpos = markers[index+1].getPosition();
+						vmarkers[index].setPosition(new g.LatLng(
+							newpos.lat() - (0.5 * (newpos.lat() - nextpos.lat())), 
+							newpos.lng() - (0.5 * (newpos.lng() - nextpos.lng()))
+						));
+						nextpos = null;
+					}
+					newpos = null;
+					index = null;
+				};
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 04e4e5d... .
 				var removeVMarkers = function(index) {
 					if (markers.length > 0) {//clicked marker has already been deleted
 						if (index != markers.length) {
@@ -434,6 +536,7 @@
 					}
 					index = null;
 				};
+<<<<<<< HEAD
 				
 				
 				window.onload = function() {
@@ -469,16 +572,22 @@
                 }
                 index = null;
             };
+=======
+>>>>>>> parent of 04e4e5d... .
 
-            window.onload = function() {
-                initMap('map');
-                initPolyline();
-            };
-        </script>
-    </head>
-    <body  style="width: 100%; height: 100%; margin: 0;">
-        <div id="map" style="width: 100%; height: 100%;"></div> 
+				window.onload = function() {
+					initMap('map');
+					initPolyline();
+				};
+	</script>
+  </head>
+  <body  style="width: 100%; height: 100%; margin: 0;">
+    <div id="map" style="width: 100%; height: 100%;"></div> 
 
+<<<<<<< HEAD
     </body>
 >>>>>>> 04e4e5d8053715d93206186934e0fac1b6212c88
+=======
+  </body>
+>>>>>>> parent of 04e4e5d... .
 </html>
